@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Colorful Calculator Suite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: #f0f2f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .section {
+            background: #fff;
+            border: 3px solid #28a745;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #fff;
+            background: #28a745;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        /* Gradient Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(145deg, #ff5733, #28a745, #007bff);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, box-shadow 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(145deg, #007bff, #28a745, #ff5733);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+        /* RGB Gradient Results */
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-align: center;
+            background: linear-gradient(90deg, #ff5733, #28a745, #007bff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientAnimation 3s infinite;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- BMI Calculator -->
+    <div class="section">
+        <h2>BMI Calculator</h2>
+        <div class="input-group">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" placeholder="Enter weight">
+        </div>
+        <div class="input-group">
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" placeholder="Enter height">
+        </div>
+        <button onclick="calculateBMI()">Calculate BMI</button>
+        <div class="result" id="bmiResult"></div>
+    </div>
+
+    <!-- Age Calculator -->
+    <div class="section">
+        <h2>Age Calculator</h2>
+        <div class="input-group">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob">
+        </div>
+        <button onclick="calculateAge()">Calculate Age</button>
+        <div class="result" id="ageResult"></div>
+    </div>
+
+    <!-- Interest Calculator -->
+    <div class="section">
+        <h2>Interest Calculator</h2>
+        <div class="input-group">
+            <label for="principal">Principal (₹):</label>
+            <input type="number" id="principal" placeholder="Enter Principal">
+        </div>
+        <div class="input-group">
+            <label for="rate">Rate (% per year):</label>
+            <input type="number" id="rate" placeholder="Enter Rate">
+        </div>
+        <div class="input-group">
+            <label>Time:</label>
+            <input type="number" id="years" placeholder="Years">
+            <input type="number" id="months" placeholder="Months">
+            <input type="number" id="days" placeholder="Days">
+        </div>
+        <button onclick="calculateInterest()">Calculate Interest</button>
+        <div class="result" id="interestResult"></div>
+    </div>
+
+    <!-- EMI Calculator -->
+    <div class="section">
+        <h2>EMI Calculator</h2>
+        <div class="input-group">
+            <label for="loanAmount">Loan Amount (₹):</label>
+            <input type="number" id="loanAmount" placeholder="Enter Loan Amount">
+        </div>
+        <div class="input-group">
+            <label for="loanRate">Rate of Interest (%):</label>
+            <input type="number" id="loanRate" placeholder="Enter Rate">
+        </div>
+        <div class="input-group">
+            <label for="loanTenure">Tenure (Months):</label>
+            <input type="number" id="loanTenure" placeholder="Enter Tenure">
+        </div>
+        <button onclick="calculateEMI()">Calculate EMI</button>
+        <div class="result" id="emiResult"></div>
+    </div>
+</div>
+
+<script>
+    function calculateBMI() {
+        const weight = parseFloat(document.getElementById('weight').value);
+        const height = parseFloat(document.getElementById('height').value) / 100;
+        const bmi = (weight / (height * height)).toFixed(2);
+        document.getElementById('bmiResult').textContent = `BMI: ${bmi}`;
+    }
+
+    function calculateAge() {
+        const dob = new Date(document.getElementById('dob').value);
+        const now = new Date();
+        let years = now.getFullYear() - dob.getFullYear();
+        let months = now.getMonth() - dob.getMonth();
+        let days = now.getDate() - dob.getDate();
+        if (days < 0) { months--; days += 30; }
+        if (months < 0) { years--; months += 12; }
+        document.getElementById('ageResult').textContent = `${years} Years, ${months} Months, ${days} Days`;
+    }
+
+    function calculateInterest() {
+        const principal = parseFloat(document.getElementById('principal').value);
+        const rate = parseFloat(document.getElementById('rate').value);
+        const time = (parseInt(document.getElementById('years').value) || 0) +
+                     (parseInt(document.getElementById('months').value) || 0) / 12 +
+                     (parseInt(document.getElementById('days').value) || 0) / 365;
+        const interest = (principal * rate * time) / 100;
+        const totalAmount = principal + interest;
+        document.getElementById('interestResult').textContent = `Principal: ₹${principal.toFixed(2)} | Interest: ₹${interest.toFixed(2)} | Total: ₹${totalAmount.toFixed(2)}`;
+    }
+
+    function calculateEMI() {
+        const P = parseFloat(document.getElementById('loanAmount').value);
+        const r = parseFloat(document.getElementById('loanRate').value) / 1200;
+        const n = parseInt(document.getElementById('loanTenure').value);
+        const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+        document.getElementById('emiResult').textContent = `EMI: ₹${emi.toFixed(2)}`;
+    }
+</script>
+
+</body>
+</html># Caluclator-
